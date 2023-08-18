@@ -14,13 +14,12 @@ jobs:
         working-directory: ./
 
     steps:
-    - name: Checkout
     - uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
     - name: Install NodeJs
-    - uses: actions/setup-node@v3
+      uses: actions/setup-node@v3
       with:
         node-version: 16
         cache: 'npm'
@@ -35,13 +34,13 @@ jobs:
          npx npm-audit-html -i npm-audit.json
 
     - name: Archive audit report
-    - uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3
       with:
         name: npm-audit-report
         path: ./npm-audit.html
 
     - name: Run SAST with sonarqube
-    - uses: sonarsource/sonarqube-scan-action@master
+      uses: sonarsource/sonarqube-scan-action@master
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
