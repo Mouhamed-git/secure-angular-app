@@ -1,0 +1,27 @@
+name: Angular Secure App CI
+
+on:
+  push:
+    branches: 
+    - '**'
+    - '!master'
+    
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup NodeJs
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'npm'
+        cache-dependency-path: './package-lock.json'
+        
+    - name: Install dependency
+      run: npm ci
+    
+    - name: Run SCA
+      run: npm audit --json | npm-audit-html
