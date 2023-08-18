@@ -39,7 +39,7 @@ jobs:
       run: mv npm-audit.html $GITHUB_WORKSPACE/npm-audit.html
 
     - name: Archive Npm Audit Report
-        uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v3
         with:
         name: npm-audit-report
         path: $GITHUB_WORKSPACE/npm-audit.html
