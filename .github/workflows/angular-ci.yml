@@ -2,26 +2,56 @@ name: Angular Secure App CI
 
 on:
   push:
-    branches: 
+    branches:
     - '**'
     - '!master'
-    
+
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup NodeJs
+    - name: Check out the repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Install NodeJs
       uses: actions/setup-node@v3
       with:
         node-version: 16
         cache: 'npm'
         cache-dependency-path: './package-lock.json'
-        
-    - name: Install dependency
+
+    - name: Install dependencies
       run: npm ci
-    
-    - name: Run SCA
-      run: npm audit --json | npm-audit-html
+
+    - name: Run SCA with npm audit and Generate report
+      run: |
+         npm audit --json > npm-audit.json || true
+         npx npm-audit-html -i npm-audit.json
+
+    - name: Archive audit report
+      uses: actions/upload-artifact@v3
+      with:
+        name: npm-audit-report
+        path: ./npm-audit.html
+
+    - name: Run SAST with sonarqube
+      uses: sonarsource/sonarqube-scan-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      with:
+        projectBaseDir: ./
+      # If you wish to fail your job when the Quality Gate is red, uncomment the
+      # following lines. This would typically be used to fail a deployment.
+      # - uses: sonarsource/sonarqube-quality-gate-action@master
+      #   timeout-minutes: 5
+      #   env:
+      #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+
