@@ -50,7 +50,7 @@ jobs:
           docker stop miisteuhdiack/secure-angular-app:preprod || true
           docker image rm miisteuhdiack/secure-angular-app:preprod
           docker pull miisteuhdiack/secure-angular-app:preprod
-          docker run --name secure-angular-app -p 80:80 -d miisteuhdiack/secure-angular-app:preprod
+          docker run --name secure-angular-app -p 80:4200 -d miisteuhdiack/secure-angular-app:preprod
 
   dast:
     needs: deploy
