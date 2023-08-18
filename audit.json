@@ -1,0 +1,310 @@
+{
+  "auditReportVersion": 2,
+  "vulnerabilities": {
+    "@angular-devkit/build-angular": {
+      "name": "@angular-devkit/build-angular",
+      "severity": "high",
+      "isDirect": true,
+      "via": [
+        "loader-utils",
+        "minimatch",
+        "semver",
+        "terser",
+        "webpack"
+      ],
+      "effects": [],
+      "range": "0.8.8 - 14.2.11 || 15.0.0-next.0 - 15.2.8 || 16.0.0-next.0 - 16.1.1",
+      "nodes": [
+        "node_modules/@angular-devkit/build-angular"
+      ],
+      "fixAvailable": {
+        "name": "@angular-devkit/build-angular",
+        "version": "16.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "@angular/cli": {
+      "name": "@angular/cli",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "semver"
+      ],
+      "effects": [],
+      "range": "9.1.0-next.0 - 14.2.11 || 15.0.0-next.0 - 15.2.8 || 16.0.0-next.0 - 16.1.1",
+      "nodes": [
+        "node_modules/@angular/cli"
+      ],
+      "fixAvailable": {
+        "name": "@angular/cli",
+        "version": "16.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "got": {
+      "name": "got",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1088948,
+          "name": "got",
+          "dependency": "got",
+          "title": "Got allows a redirect to a UNIX socket",
+          "url": "https://github.com/advisories/GHSA-pfrx-2q88-qq97",
+          "severity": "moderate",
+          "range": "<11.8.5"
+        }
+      ],
+      "effects": [
+        "package-json"
+      ],
+      "range": "<11.8.5",
+      "nodes": [
+        "node_modules/got"
+      ],
+      "fixAvailable": {
+        "name": "npm-audit-html",
+        "version": "1.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "latest-version": {
+      "name": "latest-version",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "package-json"
+      ],
+      "effects": [
+        "update-notifier"
+      ],
+      "range": "0.2.0 - 5.1.0",
+      "nodes": [
+        "node_modules/latest-version"
+      ],
+      "fixAvailable": {
+        "name": "npm-audit-html",
+        "version": "1.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "loader-utils": {
+      "name": "loader-utils",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1092998,
+          "name": "loader-utils",
+          "dependency": "loader-utils",
+          "title": "loader-utils is vulnerable to Regular Expression Denial of Service (ReDoS) via url variable",
+          "url": "https://github.com/advisories/GHSA-3rfm-jhwj-7488",
+          "severity": "high",
+          "range": ">=3.0.0 <3.2.1"
+        }
+      ],
+      "effects": [
+        "@angular-devkit/build-angular"
+      ],
+      "range": "3.0.0 - 3.2.0",
+      "nodes": [
+        "node_modules/loader-utils"
+      ],
+      "fixAvailable": {
+        "name": "@angular-devkit/build-angular",
+        "version": "16.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "minimatch": {
+      "name": "minimatch",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1092637,
+          "name": "minimatch",
+          "dependency": "minimatch",
+          "title": "minimatch ReDoS vulnerability",
+          "url": "https://github.com/advisories/GHSA-f8q6-p94x-37v3",
+          "severity": "high",
+          "range": "<3.0.5"
+        }
+      ],
+      "effects": [
+        "@angular-devkit/build-angular"
+      ],
+      "range": "<3.0.5",
+      "nodes": [
+        "node_modules/minimatch"
+      ],
+      "fixAvailable": {
+        "name": "@angular-devkit/build-angular",
+        "version": "16.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "npm-audit-html": {
+      "name": "npm-audit-html",
+      "severity": "moderate",
+      "isDirect": true,
+      "via": [
+        "update-notifier"
+      ],
+      "effects": [],
+      "range": ">=1.3.0",
+      "nodes": [
+        "node_modules/npm-audit-html"
+      ],
+      "fixAvailable": {
+        "name": "npm-audit-html",
+        "version": "1.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "package-json": {
+      "name": "package-json",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "got"
+      ],
+      "effects": [
+        "latest-version"
+      ],
+      "range": "<=6.5.0",
+      "nodes": [
+        "node_modules/package-json"
+      ],
+      "fixAvailable": {
+        "name": "npm-audit-html",
+        "version": "1.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "semver": {
+      "name": "semver",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1092461,
+          "name": "semver",
+          "dependency": "semver",
+          "title": "semver vulnerable to Regular Expression Denial of Service",
+          "url": "https://github.com/advisories/GHSA-c2qf-rxjj-qqgw",
+          "severity": "moderate",
+          "range": ">=7.0.0 <7.5.2"
+        }
+      ],
+      "effects": [
+        "@angular-devkit/build-angular",
+        "@angular/cli"
+      ],
+      "range": "7.0.0 - 7.5.1",
+      "nodes": [
+        "node_modules/semver"
+      ],
+      "fixAvailable": {
+        "name": "@angular/cli",
+        "version": "16.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "terser": {
+      "name": "terser",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1091690,
+          "name": "terser",
+          "dependency": "terser",
+          "title": "Terser insecure use of regular expressions leads to ReDoS",
+          "url": "https://github.com/advisories/GHSA-4wf5-vphf-c2xc",
+          "severity": "high",
+          "range": ">=5.0.0 <5.14.2"
+        }
+      ],
+      "effects": [
+        "@angular-devkit/build-angular"
+      ],
+      "range": "5.0.0 - 5.14.1",
+      "nodes": [
+        "node_modules/terser"
+      ],
+      "fixAvailable": {
+        "name": "@angular-devkit/build-angular",
+        "version": "16.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "update-notifier": {
+      "name": "update-notifier",
+      "severity": "moderate",
+      "isDirect": false,
+      "via": [
+        "latest-version"
+      ],
+      "effects": [
+        "npm-audit-html"
+      ],
+      "range": "0.2.0 - 5.1.0",
+      "nodes": [
+        "node_modules/update-notifier"
+      ],
+      "fixAvailable": {
+        "name": "npm-audit-html",
+        "version": "1.2.0",
+        "isSemVerMajor": true
+      }
+    },
+    "webpack": {
+      "name": "webpack",
+      "severity": "high",
+      "isDirect": false,
+      "via": [
+        {
+          "source": 1091367,
+          "name": "webpack",
+          "dependency": "webpack",
+          "title": "Cross-realm object access in Webpack 5",
+          "url": "https://github.com/advisories/GHSA-hc6q-2mpp-qw7j",
+          "severity": "high",
+          "range": ">=5.0.0 <5.76.0"
+        }
+      ],
+      "effects": [
+        "@angular-devkit/build-angular"
+      ],
+      "range": "5.0.0 - 5.75.0",
+      "nodes": [
+        "node_modules/webpack"
+      ],
+      "fixAvailable": {
+        "name": "@angular-devkit/build-angular",
+        "version": "16.2.0",
+        "isSemVerMajor": true
+      }
+    }
+  },
+  "metadata": {
+    "vulnerabilities": {
+      "info": 0,
+      "low": 0,
+      "moderate": 7,
+      "high": 5,
+      "critical": 0,
+      "total": 12
+    },
+    "dependencies": {
+      "prod": 259,
+      "dev": 934,
+      "optional": 38,
+      "peer": 1,
+      "peerOptional": 0,
+      "total": 1196
+    }
+  }
+}
