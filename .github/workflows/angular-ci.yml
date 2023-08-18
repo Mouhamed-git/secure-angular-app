@@ -23,22 +23,22 @@ jobs:
         cache: 'npm'
         cache-dependency-path: './package-lock.json'
 
-    - name: Install dependency
+    - name: Install dependencies
       run: npm ci
 
     - name: Run SCA
       run: npm audit --json > npm-audit.json || true
 
-    - name: Generate Npm Audit Report
-      run: npx npm-audit-html -i npm-audit.json -o /$GITHUB_WORKSPACE/npm-audit.html
+    - name: Generate  udit Report
+      run: npx npm-audit-html -i npm-audit.json
 
     - name: Display audit report
       run: ls $GITHUB_WORKSPACE || true
 
-    - name: Archive Npm Audit Report
+    - name: Archive audit Report
       uses: actions/upload-artifact@v3
       with:
           name: npm-audit-report
-          path: $GITHUB_WORKSPACE/npm-audit.html
+          path: $GITHUB_WORKSPACE/secure-app/angular/npm-audit.html
 
 
