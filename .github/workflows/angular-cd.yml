@@ -47,11 +47,10 @@ jobs:
         username: ${{ secrets.SSH_USER }}
         key: ${{ secrets.SSH_KEY }}
         script:  |
-          docker ps
           docker stop miisteuhdiack/secure-angular-app:preprod || true
           docker image rm miisteuhdiack/secure-angular-app:preprod
           docker pull miisteuhdiack/secure-angular-app:preprod
-          docker run -p 80:80 -d miisteuhdiack/secure-angular-app:preprod
+          docker run --name secure-angular-app -p 80:80 -d miisteuhdiack/secure-angular-app:preprod
 
   dast:
     needs: deploy
@@ -64,7 +63,7 @@ jobs:
 
       - name: Run DAST
         run: |
-          docker run -t owasp/zap2docker-stable zap-baseline.py -t http://51.83.71.17/" || true
+          docker run -t owasp/zap2docker-stable zap-baseline.py -t http://51.83.71.17 || true
 
 
 
