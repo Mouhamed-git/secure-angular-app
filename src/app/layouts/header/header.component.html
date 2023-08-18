@@ -1,0 +1,20 @@
+<mat-toolbar color="primary">
+    <span class="pointer" (click)="goToHome()">Secure App Angular</span>
+
+      <span class="flex-middle"></span>
+
+      <mat-icon>home</mat-icon>
+      <span class="me-4 pointer" (click)="goToHome()">Accueil</span>
+
+      <mat-icon>payments</mat-icon>
+      <span class="me-4 pointer" (click)="openPaymentDialog()">Payement</span>
+
+      <mat-icon>payments</mat-icon>
+      <span class="pointer" (click)="openDecaissementDialog()"> Décaissement</span>
+
+      <span class="flex-end"></span>
+      <!-- <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="logout()"> -->
+      <span class="pointer" color="red" (click)="logout()">Déconnexion</span>
+      <mat-icon>logout</mat-icon>
+
+</mat-toolbar>

@@ -1,0 +1,74 @@
+<div class="d-flex justify-content-between">
+    <span mat-dialog-title>Payer un personnel</span>
+    <mat-icon color="warn" mat-dialog-close>clear</mat-icon>
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-content class="mt-4">
+    <form #form="ngForm">
+        <p>
+            <mat-form-field appearance="outline">
+                <mat-label>Personnel</mat-label>
+                <mat-select
+                    type="text"
+                    name="personnel"
+                    #personnel="ngModel"
+                    [(ngModel)]="payment.personnel"
+                    (selectionChange)="getPersonnelSelected($event)"
+                    required
+                >
+                    <mat-option *ngFor="let p of personnels" [value]="p">{{ p.firstname }} {{ p.lastname }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="!isValid(personnel)">{{ getError(personnel) }}</mat-error>
+            </mat-form-field>
+        </p>
+
+        <p>
+            <mat-form-field appearance="outline">
+                <mat-label>Mois</mat-label>
+                <mat-select type="text" name="mouth" #mouth="ngModel" [(ngModel)]="payment.mouth" required>
+                    <mat-option *ngFor="let month of mouths" [value]="month">{{ mouth }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="!isValid(mouth)">{{ getError(mouth) }}</mat-error>
+            </mat-form-field>
+        </p>
+
+        <p>
+            <mat-form-field appearance="outline">
+                <mat-label>Montant</mat-label>
+                <input
+                    type="text"
+                    min="1"
+                    matInput
+                    name="amount"
+                    #amount="ngModel"
+                    [(ngModel)]="payment.amount"
+                    placeholder="XFCFA"
+                    required
+                />
+                <mat-error *ngIf="!isValid(amount)">{{ getError(amount) }}</mat-error>
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field color="accent" appearance="outline">
+                <mat-label>Date du payement</mat-label>
+                <input
+                    type="date"
+                    matInput
+                    name="paymentDate"
+                    [matDatepicker]="date"
+                    #datepicker="ngModel"
+                    [(ngModel)]="payment.paymentDate"
+                    (dateInput)="getDate($event.value)"
+                    [value]="payment.paymentDate"
+                    required
+                />
+                <!-- <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle> -->
+                <mat-datepicker #date color="primary"></mat-datepicker>
+                <mat-error *ngIf="!isValid(datepicker)">{{ getError(datepicker) }}</mat-error>
+            </mat-form-field>
+        </p>
+        <div mat-dialog-actions [align]="'end'">
+            <button mat-raised-button color="primary" (click)="save(form)">Valider</button>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,53 @@
+<div class="content">
+    <h1>Secure Angular App</h1>
+    <div class="w3l-login-form">
+        <h2>Connectez vous</h2>
+        <form #form="ngForm">
+            <div class="w3l-form-group">
+                <label>Email*:</label>
+                <div class="group">
+                    <mat-icon>email</mat-icon>
+                    <input
+                        class="ms-2"
+                        name="email"
+                        type="email"
+                        #email="ngModel"
+                        [(ngModel)]="auth.email"
+                        placeholder="Entrer votre email"
+                        required
+                    />
+                </div>
+                <div class="error-message" *ngIf="form.controls['email']?.dirty && form.controls['email']?.invalid">
+                    <span color="red" class="caption status-danger">{{ getError(email) }}</span>
+                </div>
+            </div>
+
+            <div class="w3l-form-group">
+                <label>Mot de passe*:</label>
+                <div class="group">
+                    <mat-icon>lock</mat-icon>
+                    <input
+                        class="ms-2"
+                        name="password"
+                        [type]="showPassword ? 'text' : 'password'"
+                        #password="ngModel"
+                        [(ngModel)]="auth.password"
+                        placeholder="Entrer votre mot de passe"
+                        required
+                    />
+                    <mat-icon matSuffix class="pointer" (click)="togglePassword()">
+                      {{showPassword ? 'visibility' : 'visibility_off'}}
+                    </mat-icon>
+                </div>
+                <div
+                    class="error-message"
+                    *ngIf="form.controls['password']?.dirty && form.controls['password']?.invalid"
+                >
+                    <span color="danger" class="caption status-danger">{{ getError(password) }}</span>
+                </div>
+            </div>
+
+            <button type="submit" (click)="login(form)">Se Connecter</button>
+        </form>
+    </div>
+</div>

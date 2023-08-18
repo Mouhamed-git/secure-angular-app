@@ -1,0 +1,92 @@
+<div class="container-with m-4">
+    <div class="d-flex justify-content-between">
+        <h4 class="fw-bold fs-2">Liste des transactions</h4>
+        <mat-form-field appearance="standard">
+            <mat-label>Filter par type</mat-label>
+            <mat-select type="text" name="mounth">
+                <mat-option *ngFor="let type of transactionTypes" [value]="type">{{ type }}</mat-option>
+            </mat-select>
+            <!-- <mat-error *ngIf="!isValid(mounth)">{{ getError(mounth) }}</mat-error> -->
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>Filter par nom</mat-label>
+            <input type="text" matInput (keyup)="filter($event)" #input />
+            <!-- <mat-error *ngIf="!isValid(description)">{{ getError(description) }}</mat-error> -->
+        </mat-form-field>
+        <mat-form-field appearance="standard">
+            <mat-label>Filter par mois</mat-label>
+            <mat-select type="text" name="mounth">
+                <mat-option *ngFor="let month of months" [value]="month">{{ month }}</mat-option>
+            </mat-select>
+            <!-- <mat-error *ngIf="!isValid(mounth)">{{ getError(mounth) }}</mat-error> -->
+        </mat-form-field>
+        <mat-form-field color="accent" appearance="standard">
+            <mat-label>Filter par date</mat-label>
+            <input type="date" matInput name="date" [matDatepicker]="date" />
+            <!-- <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle> -->
+            <mat-datepicker #date color="primary"></mat-datepicker>
+            <!-- <mat-error *ngIf="!isValid(datepicker)">{{ getError(datepicker) }}</mat-error> -->
+        </mat-form-field>
+    </div>
+
+    <div *ngIf="transactions.length === 0">
+        <h4 class="fs-3 fw-bold text-center m-4">Aucun transaction pour le moment</h4>
+    </div>
+
+    <div class="row" *ngIf="transactions.length > 0">
+        <div class="col-lg-3" *ngFor="let data of transactions">
+            <mat-card matSort>
+                <div mat-card-title class="d-flex justify-content-between fs-6">
+                    <span color="primary">{{ data?.type }}</span>
+                    <span [ngStyle]="{ color: data.status === 0 ? 'red' : 'green' }">{{ getStatus(data.status) }}</span>
+                </div>
+
+                <mat-divider></mat-divider>
+                <div mat-card-content class>
+                    <div class="d-flex justify-content-between my-4">
+                        <span>Personnel:</span> <span>{{ data?.personnel }}</span>
+                    </div>
+                    <div *ngIf="data.mounth" class="d-flex justify-content-between my-4">
+                        <span>Mois:</span> <span>{{ data?.mounth }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between my-4" *ngIf="data.paymentDate">
+                        <span>Payer le:</span> <span>{{ getDate(data?.paymentDate!) }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between my-4" *ngIf="data.decaissementType">
+                        <span>Type de decaissement:</span> <span>{{ data?.decaissementType }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between my-4" *ngIf="data.location">
+                        <span>Lieu:</span> <span>{{ data.location }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between my-4" *ngIf="data.duration">
+                        <span>Durée:</span> <span>{{ data?.duration }} &nbsp;jours</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between my-4" *ngIf="data.description">
+                        <span>Descrption:</span> <span>{{ data?.description }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between my-4" *ngIf="data.decaissementDate">
+                        <span>Fait le:</span> <span>{{ getDate(data?.decaissementDate!) }}</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between my-4">
+                        <span>Montant:</span><span>{{ data?.amount }} &nbsp;FCFA </span>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+
+    <footer *ngIf="transactions.length > 0">
+        <mat-paginator
+            [pageSizeOptions]="[5, 10, 20]"
+            showFirstLastButtons
+            aria-label="Select page of periodic elements"
+        >
+        </mat-paginator>
+    </footer>
+</div>

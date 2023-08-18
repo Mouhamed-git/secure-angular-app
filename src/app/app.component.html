@@ -1,0 +1,9 @@
+<app-header *ngIf="authService.isLoggedIn"></app-header>
+
+<body>
+    <router-outlet></router-outlet>
+</body>
+
+<footer>
+    <app-footer></app-footer>
+</footer>

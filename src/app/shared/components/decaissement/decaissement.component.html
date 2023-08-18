@@ -1,0 +1,150 @@
+<div class="d-flex justify-content-between">
+    <span mat-dialog-title>Faire un décaissement</span>
+    <mat-icon color="warn" mat-dialog-close>clear</mat-icon>
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-content class="mt-4">
+    <form #form="ngForm">
+        <p>
+            <mat-form-field appearance="outline">
+                <mat-label>Type</mat-label>
+                <mat-select
+                    type="text"
+                    name="decaissementType"
+                    #decaissementType="ngModel"
+                    [(ngModel)]="decaissement.decaissementType"
+                    (selectionChange)="getType($event)"
+                    required
+                >
+                    <mat-option *ngFor="let decaissementType of decaissementTypes" value="{{ decaissementType }}">{{
+                        decaissementType
+                    }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="!isValid(decaissementType)">{{ getError(decaissementType) }}</mat-error>
+            </mat-form-field>
+        </p>
+
+        <p>
+            <mat-form-field appearance="outline">
+                <mat-label>Personnel</mat-label>
+                <mat-select
+                    type="text"
+                    name="personnel"
+                    #personnel="ngModel"
+                    [(ngModel)]="decaissement.personnel"
+                    (selectionChange)="getPersonnelSelected($event)"
+                    required
+                >
+                    <mat-option *ngFor="let p of personnels" [value]="p">{{ p.firstname }} {{ p.lastname }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="!isValid(personnel)">{{ getError(personnel) }}</mat-error>
+            </mat-form-field>
+        </p>
+
+        <div *ngIf="isMission">
+            <p>
+                <mat-form-field appearance="outline">
+                    <mat-label>Lieu</mat-label>
+                    <input
+                        type="text"
+                        matInput
+                        name="location"
+                        #location="ngModel"
+                        [(ngModel)]="decaissement.location"
+                        required
+                    />
+                    <mat-error *ngIf="!isValid(location)">{{ getError(location) }}</mat-error>
+                </mat-form-field>
+            </p>
+
+            <p>
+                <mat-form-field appearance="outline">
+                    <mat-label>Durée</mat-label>
+                    <input
+                        type="number"
+                        matInput
+                        name="duration"
+                        #duration="ngModel"
+                        [(ngModel)]="decaissement.duration"
+                        required
+                    />
+                    <mat-error *ngIf="!isValid(duration)">{{ getError(duration) }}</mat-error>
+                    <mat-hint>Durée en jours</mat-hint>
+                </mat-form-field>
+            </p>
+
+            <p>
+                <mat-form-field appearance="outline">
+                    <mat-label>Montant</mat-label>
+                    <input
+                        type="text"
+                        matInput
+                        name="amountMission"
+                        #amountMission="ngModel"
+                        [(ngModel)]="decaissement.amountMission"
+                        placeholder="XFCFA"
+                        required
+                    />
+                    <mat-error *ngIf="!isValid(amountMission)">{{ getError(amountMission) }}</mat-error>
+                </mat-form-field>
+            </p>
+        </div>
+
+        <div *ngIf="!isMission">
+            <p>
+                <mat-form-field appearance="outline">
+                    <mat-label>Descrption</mat-label>
+                    <input
+                        type="text"
+                        matInput
+                        name="description"
+                        #description="ngModel"
+                        [(ngModel)]="decaissement.description"
+                        placeholder="XFCFA"
+                        required
+                    />
+                    <mat-error *ngIf="!isValid(description)">{{ getError(description) }}</mat-error>
+                </mat-form-field>
+            </p>
+
+            <p>
+                <mat-form-field color="accent" appearance="outline">
+                    <mat-label>Date</mat-label>
+                    <input
+                        type="date"
+                        matInput
+                        name="decaissementDate"
+                        [matDatepicker]="date"
+                        #datepicker="ngModel"
+                        [(ngModel)]="decaissement.decaissementDate"
+                        (dateInput)="getDate($event.value)"
+                        required
+                    />
+                    <!-- <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle> -->
+                    <mat-datepicker #date color="primary"></mat-datepicker>
+                    <mat-error *ngIf="!isValid(datepicker)">{{ getError(datepicker) }}</mat-error>
+                </mat-form-field>
+            </p>
+
+            <p>
+                <mat-form-field appearance="outline">
+                    <mat-label>Montant</mat-label>
+                    <input
+                        type="text"
+                        matInput
+                        name="amount"
+                        #amount="ngModel"
+                        [(ngModel)]="decaissement.amount"
+                        placeholder="XFCFA"
+                        required
+                    />
+                    <mat-error *ngIf="!isValid(amount)">{{ getError(amount) }}</mat-error>
+                </mat-form-field>
+            </p>
+        </div>
+
+        <div mat-dialog-actions [align]="'end'">
+            <button mat-raised-button color="primary" (click)="save(form)">Valider</button>
+        </div>
+    </form>
+</div>
