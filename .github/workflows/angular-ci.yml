@@ -31,4 +31,10 @@ jobs:
     - name: Generate SCA Rapport
       run: npx npm-audit-html -i npm-audit.json -o npm-audit.html
 
+    - name: Archive Npm Audit Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: npm-audit-report
+        path: reports/npm-audit.html
+
 
