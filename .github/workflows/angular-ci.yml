@@ -35,7 +35,7 @@ jobs:
          npx npm-audit-html -i npm-audit.json
 
     - name: Archive audit report
-      uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v3
       with:
         name: npm-audit-report
         path: ./npm-audit.html
