@@ -26,10 +26,10 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Run SCA et Generate report
+    - name: Run SCA and Generate report
       run: |
-        - npm audit --json > npm-audit.json || true
-        - npx npm-audit-html -i npm-audit.json
+         npm audit --json > npm-audit.json || true
+         npx npm-audit-html -i npm-audit.json
 
     - name: Archive audit report
       uses: actions/upload-artifact@v3
