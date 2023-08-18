@@ -12,7 +12,7 @@ RUN npm run build --output-path=dist/secure-angular-app
 
 FROM nginx:alpine
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
 COPY --from=node /usr/src/app/dist/secure-angular-app /usr/share/nginx/html
 
