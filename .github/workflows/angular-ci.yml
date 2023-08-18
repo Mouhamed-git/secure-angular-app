@@ -26,16 +26,12 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
-    - name: Run SCA
-      run: npm audit --json > npm-audit.json || true
+    - name: Run SCA et Generate report
+      run: |
+        - npm audit --json > npm-audit.json || true
+        - npx npm-audit-html -i npm-audit.json
 
-    - name: Generate  udit Report
-      run: npx npm-audit-html -i npm-audit.json
-
-    - name: Display audit report
-      run: ls $GITHUB_WORKSPACE || true
-
-    - name: Archive audit Report
+    - name: Archive audit report
       uses: actions/upload-artifact@v3
       with:
           name: npm-audit-report
