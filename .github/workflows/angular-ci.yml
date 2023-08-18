@@ -29,11 +29,14 @@ jobs:
     - name: Run SCA
       run: npm audit --json > npm-audit.json || true
 
+    - name: Display audit report
+      run: cat npm-audit.json
+
     - name: Generate Npm Audit Report
       run: npx npm-audit-html -i npm-audit.json -o npm-audit.html
 
     - name: Save HTML report
-        run: mv npm-audit.html $GITHUB_WORKSPACE/npm-audit.html
+      run: mv npm-audit.html $GITHUB_WORKSPACE/npm-audit.html
 
     - name: Archive Npm Audit Report
         uses: actions/upload-artifact@v3
