@@ -39,6 +39,6 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
           name: npm-audit-report
-          path: $GITHUB_WORKSPACE/secure-app-angular/npm-audit.html
+          path: ./npm-audit.html
 
 
