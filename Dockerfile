@@ -8,7 +8,7 @@ RUN npm ci
 
 COPY . .
 
-RUN npm run build --output-path=dist/secure-angular-app
+RUN npm run build
 
 FROM nginx:alpine
 

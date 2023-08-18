@@ -1,4 +1,4 @@
-name: Security Register CD
+name: Secure Angular App CD
 
 on:
   #pull_request:

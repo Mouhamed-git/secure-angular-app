@@ -1,4 +1,4 @@
-name: Angular Secure App CI
+name: Secure Angular App CI
 
 on:
   push:
