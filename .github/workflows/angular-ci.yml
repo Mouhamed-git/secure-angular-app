@@ -27,7 +27,6 @@ jobs:
       run: npm ci
 
     - name: Run SCA
-      run: npm audit --json > npm-audit.json
-    - name: Generate SCA Rapport
-      run: npx npm-audit-html -i npm-audit.json -o npm-audit.html
+      run: npm audit
+
 
