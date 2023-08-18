@@ -37,7 +37,7 @@ jobs:
           name: npm-audit-report
           path: ./npm-audit.html
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         fetch-depth: 0
     - uses: sonarsource/sonarqube-scan-action@master
