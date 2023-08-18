@@ -14,7 +14,8 @@ jobs:
         working-directory: ./
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Check out the repository
+    uses: actions/checkout@v3
       with:
         fetch-depth: 0
 
