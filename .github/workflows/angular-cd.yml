@@ -10,46 +10,46 @@ on:
 #    types:
 #      - closed
 jobs:
-  deploy:
-#    if: github.event.pull_request.merged == true
-
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./
-
-    steps:
-    - name: Check out the repository
-      uses: actions/checkout@v3
-
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v4
-      with:
-        context: .
-        file: ./Dockerfile
-        push: true
-        tags: miisteuhdiack/secure-angular-app:preprod
-
-    - name: Deploy App
-      uses: appleboy/ssh-action@v0.1.10
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_KEY }}
-        script:  |
-          docker stop miisteuhdiack/secure-angular-app:preprod || true
-          docker rm -f secure-angular-app
-          docker pull miisteuhdiack/secure-angular-app:preprod
-          docker run --name secure-angular-app -p 80:80 -d miisteuhdiack/secure-angular-app:preprod
+#  deploy:
+##    if: github.event.pull_request.merged == true
+#
+#    runs-on: ubuntu-latest
+#    defaults:
+#      run:
+#        working-directory: ./
+#
+#    steps:
+#    - name: Check out the repository
+#      uses: actions/checkout@v3
+#
+#    - name: Set up Docker Buildx
+#      uses: docker/setup-buildx-action@v2
+#
+#    - name: Log in to Docker Hub
+#      uses: docker/login-action@v2
+#      with:
+#        username: ${{ secrets.DOCKER_USERNAME }}
+#        password: ${{ secrets.DOCKER_PASSWORD }}
+#
+#    - name: Build and push Docker image
+#      uses: docker/build-push-action@v4
+#      with:
+#        context: .
+#        file: ./Dockerfile
+#        push: true
+#        tags: miisteuhdiack/secure-angular-app:preprod
+#
+#    - name: Deploy App
+#      uses: appleboy/ssh-action@v0.1.10
+#      with:
+#        host: ${{ secrets.SSH_HOST }}
+#        username: ${{ secrets.SSH_USER }}
+#        key: ${{ secrets.SSH_KEY }}
+#        script:  |
+#          docker stop miisteuhdiack/secure-angular-app:preprod || true
+#          docker rm -f secure-angular-app
+#          docker pull miisteuhdiack/secure-angular-app:preprod
+#          docker run --name secure-angular-app -p 80:80 -d miisteuhdiack/secure-angular-app:preprod
 
   dast:
     needs: deploy
@@ -62,7 +62,7 @@ jobs:
 
       - name: Run DAST with Zap
         run: |
-          docker run -t owasp/zap2docker-stable --name zap zap-baseline.py -r zap-report.html -t http://51.83.71.17 || true
+          docker run --name owasp-zap -t owasp/zap2docker-stable zap-baseline.py -r zap-report.html -t http://51.83.71.17 || true
           docker cp zap:/zap-report.html ./zap.report
 
       - name: Archive DAST report
