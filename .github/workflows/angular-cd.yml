@@ -63,9 +63,9 @@ jobs:
           docker cp zap2docker-stable:/zap-report.html ./zap.report
 
       - name: Archive DAST report
-      uses: actions/upload-artifact@v3
-      with:
-        name: zap-report
-        path: ./report.html
+        uses: actions/upload-artifact@v3
+          with:
+          name: zap-report
+          path: ./report.html
 
 
