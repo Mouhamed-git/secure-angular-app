@@ -59,8 +59,8 @@ jobs:
 
       - name: Run DAST with Zap
         run: |
-          docker run -t owasp/zap2docker-stable zap-baseline.py -r zap-report.html -t http://51.83.71.17 || true
-          docker cp zap2docker-stable:/zap-report.html ./zap.report
+          docker run -t owasp/zap2docker-stable --name zap zap-baseline.py -r zap-report.html -t http://51.83.71.17 || true
+          docker cp zap:/zap-report.html ./zap.report
 
       - name: Archive DAST report
         uses: actions/upload-artifact@v3
