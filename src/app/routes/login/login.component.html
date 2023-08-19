@@ -14,13 +14,13 @@
                         name="email"
                         type="email"
                         #email="ngModel"
-                        [(ngModel)]="auth.email"
+                        [(ngModel)]="request.email"
                         placeholder="Entrer votre email"
                         required
                     />
                 </div>
-                <div class="error-message" *ngIf="submitted || (form.controls['email']?.dirty && form.controls['email']?.invalid)">
-                    <span class="text-danger caption status-danger">{{ getError(email) }}</span>
+                <div class="error-message" *ngIf="submitted && !isValid(email)">
+                  <span class="text-danger caption status-danger">{{ getError(email) }}</span>
                 </div>
             </div>
 
@@ -33,7 +33,7 @@
                         name="password"
                         [type]="showPassword ? 'text' : 'password'"
                         #password="ngModel"
-                        [(ngModel)]="auth.password"
+                        [(ngModel)]="request.password"
                         placeholder="Entrer votre mot de passe"
                         required
                     />
@@ -43,9 +43,9 @@
                 </div>
                 <div
                     class="error-message"
-                    *ngIf="submitted || form.controls['password']?.dirty && form.controls['password']?.invalid"
+                    *ngIf="submitted && !isValid(password)"
                 >
-                    <span color="danger" class="caption status-danger">{{ getError(password) }}</span>
+                    <span class="caption status-danger text-danger">{{ getError(password) }}</span>
                 </div>
             </div>
 

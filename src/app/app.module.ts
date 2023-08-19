@@ -17,7 +17,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
-import { DecaissementComponent } from './shared/components/decaissement/decaissement.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HomeComponent } from './routes/home/home.component';
@@ -29,36 +28,22 @@ import { AuthService } from './services/auth.service';
 import { LoginModule } from './routes/login/login.module';
 import { HotToastModule } from '@ngneat/hot-toast';
 import { TransactionService } from './services/transaction.service';
+import {HomeModule} from "./routes/home/home.module";
 
 @NgModule({
     declarations: [
         AppComponent,
         HeaderComponent,
         FooterComponent,
-        PaymentComponent,
-        DecaissementComponent,
-        HomeComponent
     ],
     imports: [
         BrowserModule,
         AppRoutingModule,
         BrowserAnimationsModule,
+        HomeModule,
+        LoginModule,
         MatToolbarModule,
         MatIconModule,
-        MatDialogModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatSelectModule,
-        MatDividerModule,
-        MatButtonModule,
-        MatDatepickerModule,
-        MatNativeDateModule,
-        MatTableModule,
-        MatSortModule,
-        MatPaginatorModule,
-        MatCardModule,
-        FormsModule,
-        LoginModule,
         HotToastModule.forRoot(),
         provideFirestore(() => getFirestore())
     ],

@@ -62,7 +62,6 @@
                     [value]="payment.paymentDate"
                     required
                 />
-                <!-- <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle> -->
                 <mat-datepicker #date color="primary"></mat-datepicker>
                 <mat-error *ngIf="!isValid(datepicker)">{{ getError(datepicker) }}</mat-error>
             </mat-form-field>

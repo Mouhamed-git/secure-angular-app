@@ -1,18 +1,18 @@
 import { Timestamp } from 'firebase/firestore';
-import { DecaissementType } from '../enums/decaissement-type';
-import { TransactionType } from '../enums/transaction-type';
+import { OutflowType } from '../enums/decaissement-type.enums';
+import { TransactionType } from '../enums/transaction-type.enums';
 
-export class TransactionModel {
+export class Transaction {
     type?: TransactionType;
     personnel?: string;
     cin?: string;
-    mounth?: string;
+    mouth?: string;
     amount?: number;
     status?: number;
     paymentDate?: Timestamp;
-    decaissementType?: DecaissementType;
+    outflowType?: OutflowType;
     location?: string;
     duration?: number;
     description?: string;
-    decaissementDate?: Timestamp;
+    outflowDate?: Timestamp;
 }

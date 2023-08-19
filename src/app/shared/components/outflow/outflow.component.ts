@@ -1,31 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
-import { DecaissementModel } from '../../models/decaissement-model';
-import { DecaissementType } from '../../enums/decaissement-type';
+import { Outflow} from '../../models/decaissement-model';
+import { OutflowType } from '../../enums/decaissement-type.enums';
 import { FormValidator } from '../../../utils/form-validator-utils';
 import { TransactionService } from '../../../services/transaction.service';
 import { HotToastService } from '@ngneat/hot-toast';
 import { MatDialog } from '@angular/material/dialog';
-import { TransactionModel } from '../../models/transaction-model';
-import { TransactionType } from '../../enums/transaction-type';
+import { Transaction } from '../../models/transaction-model';
+import { TransactionType } from '../../enums/transaction-type.enums';
 import { Router } from '@angular/router';
 import { PersonnelService } from '../../../services/personnel.service';
-import { PersonnelModel } from '../../models/personnel-model';
+import { Personnel } from '../../models/personnel-model';
 
 @Component({
-    selector: 'app-decaissement',
-    templateUrl: './decaissement.component.html',
-    styleUrls: ['./decaissement.component.scss']
+    selector: 'app-outflow',
+    templateUrl: './outflow.component.html',
+    styleUrls: ['./outflow.component.scss']
 })
-export class DecaissementComponent implements OnInit {
-    decaissement: DecaissementModel = new DecaissementModel();
-    decaissementTypes: DecaissementType[] = [
-        DecaissementType.MISSION,
-        DecaissementType.PURCHASE,
-        DecaissementType.VARIOUS
+export class OutflowComponent implements OnInit {
+    outflow: Outflow = new Outflow();
+    outflowTypes: OutflowType[] = [
+      OutflowType.MISSION,
+      OutflowType.PURCHASE,
+      OutflowType.VARIOUS
     ];
-    personnels: PersonnelModel[] = [];
-    personnelSelected: PersonnelModel = new PersonnelModel();
+    personnels: Personnel[] = [];
+    personnelSelected: Personnel = new Personnel();
     isMission: boolean = true;
     submitted: boolean = false;
     constructor(
@@ -41,16 +41,18 @@ export class DecaissementComponent implements OnInit {
     }
 
     getAllPersonnels() {
-        this.personnelService.getAll().subscribe(
-            (data) => {
-                console.log(data);
-                this.personnels = data;
-            },
-            (error) => {
-                console.log(error);
-            }
-        );
+        this.personnelService.getAll()
+          .subscribe({
+          next:  (data) => {
+            console.log(data);
+            this.personnels = data;
+          },
+          error: (error) => {
+            console.log(error);
+          }
+        });
     }
+
     getError(field: NgModel) {
         return FormValidator.getError(field);
     }
@@ -84,13 +86,13 @@ export class DecaissementComponent implements OnInit {
         if (form.invalid) {
             return;
         }
-        let transaction: TransactionModel = new TransactionModel();
+        let transaction: Transaction;
         transaction = form.value;
         transaction.type = TransactionType.DECAISSEMENT;
-        transaction.personnel = this.personnelSelected.firstname!.concat(' ').concat(this.personnelSelected.lastname!);
+        transaction.personnel = this.personnelSelected.firstname!.concat(` ${this.personnelSelected.lastname!}`);
         transaction.cin = this.personnelSelected.cin;
         this.transactionService
-            .save(form.value)
+            .save(transaction)
             .pipe(
                 this.toast.observe({
                     loading: 'Enregistrement en cours ...',
@@ -98,15 +100,15 @@ export class DecaissementComponent implements OnInit {
                     error: ({ message }) => `${message}`
                 })
             )
-            .subscribe(
-                (data) => {
-                    console.log(data);
-                    this.dialog.closeAll();
-                    this.router.navigateByUrl('/');
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
+            .subscribe({
+              next: (data) => {
+                console.log(data);
+                this.dialog.closeAll();
+                this.router.navigateByUrl('/').then(console.log);
+              },
+              error: (error) => {
+                console.log(error);
+              }
+            });
     }
 }

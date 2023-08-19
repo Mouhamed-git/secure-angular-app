@@ -1,4 +1,4 @@
-export class PaymentModel {
+export class Payment {
     personnel?: string;
     mouth?: string;
     amount?: number;
