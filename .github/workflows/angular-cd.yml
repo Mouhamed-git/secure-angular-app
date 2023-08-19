@@ -52,7 +52,7 @@ jobs:
 #          docker run --name secure-angular-app -p 80:80 -d miisteuhdiack/secure-angular-app:preprod
 
   dast:
-    needs: deploy
+  #  needs: deploy
 
     runs-on: ubuntu-latest
 
