@@ -62,7 +62,9 @@ jobs:
 
       - name: Run DAST with Zap
         run: |
-          docker run --name zap -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t http://51.83.71.17 -r zap-report.html || true
+          mkdir zap-reports
+          cd zap-reports
+          docker run --name zap --rm -v $(pwd):/zap/wrk -u $(id -u ${USER}):$(id -g ${USER}) -t owasp/zap2docker-stable zap-baseline.py -t http://51.83.71.17 -r zap-report.html || true
           docker ps
           docker cp zap:/zap/wrk/zap-report.html ./zap.report
 
@@ -70,6 +72,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: zap-report
-          path: ./report.html
+          path: zap-reports
 
 
