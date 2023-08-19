@@ -55,6 +55,9 @@ jobs:
   #  needs: deploy
 
     runs-on: ubuntu-latest
+    defaults:
+      run:
+      working-directory: ./
 
     steps:
       - name: Set up Docker Buildx
@@ -62,15 +65,13 @@ jobs:
 
       - name: Run DAST with Zap
         run: |
-          mkdir zap-reports
-          cd zap-reports
-          docker run zap --rm -v $(pwd):/zap/wrk -u $(id -u ${USER}):$(id -g ${USER}) -t owasp/zap2docker-stable zap-baseline.py -t http://51.83.71.17 -r zap-report.html || true
+          docker run zap --rm -v $(pwd):/zap/wrk -u $(id -u ${USER}):$(id -g ${USER}) -t owasp/zap2docker-stable zap-baseline.py -t http://51.83.71.17 -r zap-report.html
 #          docker cp zap:/zap/wrk/zap-report.html ./zap.report
 
       - name: Archive DAST report
         uses: actions/upload-artifact@v3
         with:
           name: zap-report
-          path: zap-reports
+          path: ./
 
 
