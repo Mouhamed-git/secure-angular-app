@@ -1,4 +1,6 @@
-<div class="content">
+<div class="content"
+      style="background: url('assets/images/cover.jpg') no-repeat 0 0;
+      background-size: cover">
     <h1>Secure Angular App</h1>
     <div class="w3l-login-form">
         <h2>Connectez vous</h2>
@@ -17,8 +19,8 @@
                         required
                     />
                 </div>
-                <div class="error-message" *ngIf="form.controls['email']?.dirty && form.controls['email']?.invalid">
-                    <span color="red" class="caption status-danger">{{ getError(email) }}</span>
+                <div class="error-message" *ngIf="submitted || (form.controls['email']?.dirty && form.controls['email']?.invalid)">
+                    <span class="text-danger caption status-danger">{{ getError(email) }}</span>
                 </div>
             </div>
 
@@ -41,7 +43,7 @@
                 </div>
                 <div
                     class="error-message"
-                    *ngIf="form.controls['password']?.dirty && form.controls['password']?.invalid"
+                    *ngIf="submitted || form.controls['password']?.dirty && form.controls['password']?.invalid"
                 >
                     <span color="danger" class="caption status-danger">{{ getError(password) }}</span>
                 </div>

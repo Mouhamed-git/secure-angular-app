@@ -1,9 +1,7 @@
 .content {
     margin: 0;
     padding: 0;
-    background: url('/src/assets/images/cover4.jpg') no-repeat 0 0;
     min-height: 100vh;
-    background-size: cover;
     font-family: 'Raleway', sans-serif;
 }
 
@@ -138,9 +136,6 @@ footer {
     padding: 4em 0;
     text-align: center;
 }
-/*--//footer--*/
-
-/*-- /responsive design --*/
 
 @media (max-width: 768px) {
     h1 {
@@ -207,8 +202,6 @@ footer {
         display: block;
     }
 }
-
-/*-- /responsive design --*/
 
 .error-message {
     color: red;

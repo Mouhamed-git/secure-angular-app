@@ -15,13 +15,14 @@ import { FormValidator } from '../../utils/form-validator-utils';
 export class LoginComponent implements OnInit {
     showPassword: boolean = false;
     auth: AuthModel = new AuthModel();
+    submitted: boolean = false;
 
     constructor(public authService: AuthService, private router: Router, private toast: HotToastService) {}
 
     ngOnInit(): void {}
 
     getError(field: NgModel) {
-        return FormValidator.getError(field);
+        return this.submitted && FormValidator.getError(field);
     }
 
     isValid(field: NgModel) {
@@ -33,6 +34,7 @@ export class LoginComponent implements OnInit {
     }
 
     login(form: NgForm) {
+      this.submitted = true;
         console.log(form.value);
         if (form.invalid) {
             return;

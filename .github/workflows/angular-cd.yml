@@ -1,18 +1,15 @@
 name: Secure Angular App CD
 
 on:
-  #pull_request:
-  #  branches:
-  #   - master
-  #  types:
-  #    - closed
-  push:
+  pull_request:
     branches:
-      - 'master'
-
+     - master
+    types:
+      - closed
+      -
 jobs:
   deploy:
-   # if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true
 
     runs-on: ubuntu-latest
     defaults:
@@ -63,7 +60,5 @@ jobs:
 
       - name: Run DAST
         run: |
-          docker run -t owasp/zap2docker-stable zap-baseline.py -t http://51.83.71.17 || true
-
-
+          docker run -t owasp/zap2docker-stable zap-baseline.py -r zap-report.html -t http://51.83.71.17 || true
 
