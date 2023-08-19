@@ -6,7 +6,6 @@ on:
      - master
     types:
       - closed
-      -
 jobs:
   deploy:
     if: github.event.pull_request.merged == true
@@ -58,7 +57,15 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Run DAST
+      - name: Run DAST with Zap
         run: |
           docker run -t owasp/zap2docker-stable zap-baseline.py -r zap-report.html -t http://51.83.71.17 || true
+          docker cp zap2docker-stable:/zap-report.html ./zap.report
+
+      - name: Archive DAST report
+      uses: actions/upload-artifact@v3
+      with:
+        name: zap-report
+        path: ./report.html
+
 
