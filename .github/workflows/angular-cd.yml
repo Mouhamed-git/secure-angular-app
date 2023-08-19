@@ -71,6 +71,7 @@ jobs:
       - name: Run DAST with Zap
         run: |
           sudo mkdir -p /zap/wrk
+          ls -la
           sudo docker run --name zap --rm -v $(pwd):/zap/wrk -t owasp/zap2docker-stable zap-baseline.py -t http://51.83.71.17 -r zap-report.html || true
 
       - name: Archive DAST report
