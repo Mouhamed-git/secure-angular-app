@@ -1,12 +1,16 @@
 name: Secure Angular App CD
 
 on:
-  push:
+  pull_request:
     branches:
-    - 'master'
+      - master
+    types:
+      - closed
 
 jobs:
   deploy:
+
+    if: github.event.pull_request.merged == true
 
     runs-on: ubuntu-latest
     defaults:
