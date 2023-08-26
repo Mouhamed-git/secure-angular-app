@@ -8,9 +8,9 @@ import { TransactionService } from '../../../services/transaction.service';
 import {  MONTHS } from '../../enums/mounth.enums';
 import { TransactionType } from '../../enums/transaction-type.enums';
 import { FormValidator } from '../../../utils/form-validator-utils';
-import {Payment} from "../../models/payment-model";
-import {Personnel} from "../../models/personnel-model";
-import {Transaction} from "../../models/transaction-model";
+import {Payment} from "../../models/payment.model";
+import {Personnel} from "../../models/personnel.model";
+import {Transaction} from "../../models/transaction.model";
 
 @Component({
     selector: 'app-payment',

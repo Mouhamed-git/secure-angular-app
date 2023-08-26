@@ -4,7 +4,7 @@ import { TransactionService } from '../../services/transaction.service';
 import {MONTHS} from '../../shared/enums/mounth.enums';
 import {  TRANSACTION_TYPE } from '../../shared/enums/transaction-type.enums';
 import {DateUtils} from "../../utils/date.utils";
-import {Transaction} from "../../shared/models/transaction-model";
+import {Transaction} from "../../shared/models/transaction.model";
 
 @Component({
     selector: 'app-home',

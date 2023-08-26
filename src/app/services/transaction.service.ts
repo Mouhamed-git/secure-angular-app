@@ -3,7 +3,7 @@ import { Firestore, collectionData, collection, doc, addDoc, getDoc } from '@ang
 import { CollectionReference, getDocs } from 'firebase/firestore';
 import { from } from 'rxjs';
 import { TransactionType } from '../shared/enums/transaction-type.enums';
-import { Transaction } from '../shared/models/transaction-model';
+import { Transaction } from '../shared/models/transaction.model';
 
 @Injectable({
     providedIn: 'root'

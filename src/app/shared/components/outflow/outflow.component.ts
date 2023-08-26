@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
-import { Outflow} from '../../models/decaissement-model';
+import { Outflow} from '../../models/outflow.model';
 import { OutflowType } from '../../enums/decaissement-type.enums';
 import { FormValidator } from '../../../utils/form-validator-utils';
 import { TransactionService } from '../../../services/transaction.service';
 import { HotToastService } from '@ngneat/hot-toast';
 import { MatDialog } from '@angular/material/dialog';
-import { Transaction } from '../../models/transaction-model';
+import { Transaction } from '../../models/transaction.model';
 import { TransactionType } from '../../enums/transaction-type.enums';
 import { Router } from '@angular/router';
 import { PersonnelService } from '../../../services/personnel.service';
-import { Personnel } from '../../models/personnel-model';
+import { Personnel } from '../../models/personnel.model';
 
 @Component({
     selector: 'app-outflow',
