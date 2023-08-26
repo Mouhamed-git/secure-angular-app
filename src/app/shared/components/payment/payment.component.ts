@@ -5,12 +5,12 @@ import { Router } from '@angular/router';
 import { HotToastService } from '@ngneat/hot-toast';
 import { PersonnelService } from '../../../services/personnel.service';
 import { TransactionService } from '../../../services/transaction.service';
-import {  MONTHS } from '../../enums/mounth';
-import { TransactionType } from '../../enums/transaction-type';
-import { PaymentModel } from '../../models/payment-model';
-import { PersonnelModel } from '../../models/personnel-model';
-import { TransactionModel } from '../../models/transaction-model';
+import {  MONTHS } from '../../enums/mounth.enums';
+import { TransactionType } from '../../enums/transaction-type.enums';
 import { FormValidator } from '../../../utils/form-validator-utils';
+import {Payment} from "../../models/payment.model";
+import {Personnel} from "../../models/personnel.model";
+import {Transaction} from "../../models/transaction.model";
 
 @Component({
     selector: 'app-payment',
@@ -18,11 +18,11 @@ import { FormValidator } from '../../../utils/form-validator-utils';
     styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
-    payment: PaymentModel = new PaymentModel();
+    payment: Payment = new Payment();
     submitted: boolean = false;
     mouths = MONTHS;
-    personnels: PersonnelModel[] = [];
-    personnelSelected: PersonnelModel = new PersonnelModel();
+    personnels: Personnel[] = [];
+    personnelSelected: Personnel = new Personnel();
     constructor(
         private transactionService: TransactionService,
         private personnelService: PersonnelService,
@@ -36,19 +36,20 @@ export class PaymentComponent implements OnInit {
     }
 
     getAllPersonnels() {
-        this.personnelService.getAll().subscribe(
-            (data) => {
-                console.log(data);
-                this.personnels = data;
+        this.personnelService.getAll()
+          .subscribe({
+            next: (data) => {
+              console.log(data);
+              this.personnels = data;
             },
-            (error) => {
+            error: (error) => {
                 console.log(error);
-            }
-        );
+              }
+          }
+        )
     }
 
     getPersonnelSelected(event: any) {
-        console.log(event.value);
         this.personnelSelected = event.value;
     }
 
@@ -71,29 +72,29 @@ export class PaymentComponent implements OnInit {
         if (form.invalid) {
             return;
         }
-        let transaction: TransactionModel = new TransactionModel();
+        let transaction: Transaction;
         transaction = form.value;
         transaction.type = TransactionType.PAYMENT;
-        transaction.personnel = this.personnelSelected.firstname!.concat(' ').concat(this.personnelSelected.lastname!);
+        transaction.personnel = this.personnelSelected.firstname!.concat(` ${this.personnelSelected.lastname!}`);
         transaction.cin = this.personnelSelected.cin;
         this.transactionService
             .save(transaction)
             .pipe(
                 this.toast.observe({
                     loading: 'Enregistrement en cours ...',
-                    success: 'Payement enregistré avec succès',
+                    success: 'Paiement enregistré avec succès',
                     error: ({ message }) => `${message}`
                 })
             )
-            .subscribe(
-                (data) => {
-                    console.log(data);
-                    this.dialog.closeAll();
-                    this.router.navigateByUrl('/');
-                },
-                (error) => {
-                    console.log(error);
-                }
-            );
+            .subscribe({
+              next: (data) => {
+                console.log(data);
+                this.dialog.closeAll();
+                this.router.navigateByUrl('/').then(console.log)
+              },
+              error: (error) => {
+                console.log(error);
+              }
+            });
     }
 }

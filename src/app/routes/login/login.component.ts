@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
 import { Router } from '@angular/router';
-import { faEnvelope, faUnlock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import { HotToastService } from '@ngneat/hot-toast';
 import { AuthService } from '../../services/auth.service';
-import { AuthModel } from '../../shared/models/auth-model';
+import { AuthRequest } from '../../shared/models/auth-model';
 import { FormValidator } from '../../utils/form-validator-utils';
 
 @Component({
@@ -14,7 +13,7 @@ import { FormValidator } from '../../utils/form-validator-utils';
 })
 export class LoginComponent implements OnInit {
     showPassword: boolean = false;
-    auth: AuthModel = new AuthModel();
+    request: AuthRequest = new AuthRequest();
     submitted: boolean = false;
 
     constructor(public authService: AuthService, private router: Router, private toast: HotToastService) {}
@@ -26,7 +25,7 @@ export class LoginComponent implements OnInit {
     }
 
     isValid(field: NgModel) {
-        return FormValidator.isValid(field);
+        return this.submitted && FormValidator.isValid(field);
     }
 
     togglePassword() {

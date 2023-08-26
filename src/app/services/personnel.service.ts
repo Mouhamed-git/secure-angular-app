@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Firestore, collectionData, collection, doc, addDoc, getDoc } from '@angular/fire/firestore';
 import { CollectionReference, getDocs } from 'firebase/firestore';
 import { from } from 'rxjs';
-import { TransactionModel } from '../shared/models/transaction-model';
 
 @Injectable({
     providedIn: 'root'

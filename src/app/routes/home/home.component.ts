@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Timestamp } from 'firebase/firestore';
 import { TransactionService } from '../../services/transaction.service';
-import {MONTHS} from '../../shared/enums/mounth';
-import {  TRANSACTION_TYPE } from '../../shared/enums/transaction-type';
-import { TransactionModel } from '../../shared/models/transaction-model';
+import {MONTHS} from '../../shared/enums/mounth.enums';
+import {  TRANSACTION_TYPE } from '../../shared/enums/transaction-type.enums';
 import {DateUtils} from "../../utils/date.utils";
+import {Transaction} from "../../shared/models/transaction.model";
 
 @Component({
     selector: 'app-home',
@@ -12,7 +12,7 @@ import {DateUtils} from "../../utils/date.utils";
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-    transactions: TransactionModel[] = [];
+    transactions: Transaction[] = [];
     months = MONTHS;
     transactionTypes = TRANSACTION_TYPE;
 
@@ -23,14 +23,14 @@ export class HomeComponent implements OnInit {
     }
 
     getTransactions() {
-        this.transactionService.getAll().subscribe(
-            (data) => {
-                console.log(data);
-                this.transactions = data;
-            },
-            (error) => {
-                console.log(error);
-            }
+        this.transactionService.getAll().subscribe({
+          next:  (data) => {
+            this.transactions = data;
+          },
+          error: (error) => {
+            console.log(error);
+          }
+        }
         );
     }
 
@@ -38,7 +38,6 @@ export class HomeComponent implements OnInit {
         this.getTransactions();
     }
 
-    filter(value: any) {}
 
     getStatus(status?: number) {
         switch (status) {
@@ -48,6 +47,9 @@ export class HomeComponent implements OnInit {
                 return 'Payé';
         }
         return;
+    }
+
+    filter(event: any) {
     }
 
     getDate(dateTime: Timestamp) {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Auth, authState } from '@angular/fire/auth';
 import { signInWithEmailAndPassword } from '@firebase/auth';
 import { from } from 'rxjs';
-import { AuthModel } from '../shared/models/auth-model';
+import { AuthRequest } from '../shared/models/auth-model';
 
 @Injectable({
     providedIn: 'root'
@@ -13,8 +13,8 @@ export class AuthService {
 
     constructor(private auth: Auth) {}
 
-    signIn(authModel: AuthModel) {
-        return from(signInWithEmailAndPassword(this.auth, authModel.email ?? '', authModel.password ?? ''));
+    signIn(request: AuthRequest) {
+        return from(signInWithEmailAndPassword(this.auth, request.email ?? '', request.password ?? ''));
     }
 
     signOut() {

@@ -1,4 +1,4 @@
-export class PersonnelModel {
+export class Personnel {
     cin?: string;
     firstname?: string;
     lastname?: string;

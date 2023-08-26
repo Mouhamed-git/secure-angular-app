@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Firestore, collectionData, collection, doc, addDoc, getDoc } from '@angular/fire/firestore';
 import { CollectionReference, getDocs } from 'firebase/firestore';
 import { from } from 'rxjs';
-import { TransactionType } from '../shared/enums/transaction-type';
-import { TransactionModel } from '../shared/models/transaction-model';
+import { TransactionType } from '../shared/enums/transaction-type.enums';
+import { Transaction } from '../shared/models/transaction.model';
 
 @Injectable({
     providedIn: 'root'
@@ -16,7 +16,7 @@ export class TransactionService {
         this.transactionRef = collection(this.firestore, this.dbPath);
     }
 
-    save(transaction: TransactionModel) {
+    save(transaction: Transaction) {
         return from(
             addDoc(this.transactionRef, {
                 ...transaction

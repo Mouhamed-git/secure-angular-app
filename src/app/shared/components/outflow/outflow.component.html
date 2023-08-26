@@ -10,17 +10,17 @@
                 <mat-label>Type</mat-label>
                 <mat-select
                     type="text"
-                    name="decaissementType"
-                    #decaissementType="ngModel"
-                    [(ngModel)]="decaissement.decaissementType"
+                    name="outflowType"
+                    #outflowType="ngModel"
+                    [(ngModel)]="outflow.outflowType"
                     (selectionChange)="getType($event)"
                     required
                 >
-                    <mat-option *ngFor="let decaissementType of decaissementTypes" value="{{ decaissementType }}">{{
-                        decaissementType
+                    <mat-option *ngFor="let outflowType of outflowTypes" value="{{ outflowType }}">{{
+                      outflowType
                     }}</mat-option>
                 </mat-select>
-                <mat-error *ngIf="!isValid(decaissementType)">{{ getError(decaissementType) }}</mat-error>
+                <mat-error *ngIf="!isValid(outflowType)">{{ getError(outflowType) }}</mat-error>
             </mat-form-field>
         </p>
 
@@ -31,7 +31,7 @@
                     type="text"
                     name="personnel"
                     #personnel="ngModel"
-                    [(ngModel)]="decaissement.personnel"
+                    [(ngModel)]="outflow.personnel"
                     (selectionChange)="getPersonnelSelected($event)"
                     required
                 >
@@ -50,7 +50,7 @@
                         matInput
                         name="location"
                         #location="ngModel"
-                        [(ngModel)]="decaissement.location"
+                        [(ngModel)]="outflow.location"
                         required
                     />
                     <mat-error *ngIf="!isValid(location)">{{ getError(location) }}</mat-error>
@@ -65,7 +65,7 @@
                         matInput
                         name="duration"
                         #duration="ngModel"
-                        [(ngModel)]="decaissement.duration"
+                        [(ngModel)]="outflow.duration"
                         required
                     />
                     <mat-error *ngIf="!isValid(duration)">{{ getError(duration) }}</mat-error>
@@ -81,7 +81,7 @@
                         matInput
                         name="amountMission"
                         #amountMission="ngModel"
-                        [(ngModel)]="decaissement.amountMission"
+                        [(ngModel)]="outflow.amountMission"
                         placeholder="XFCFA"
                         required
                     />
@@ -93,13 +93,13 @@
         <div *ngIf="!isMission">
             <p>
                 <mat-form-field appearance="outline">
-                    <mat-label>Descrption</mat-label>
+                    <mat-label>Description</mat-label>
                     <input
                         type="text"
                         matInput
                         name="description"
                         #description="ngModel"
-                        [(ngModel)]="decaissement.description"
+                        [(ngModel)]="outflow.description"
                         placeholder="XFCFA"
                         required
                     />
@@ -113,14 +113,13 @@
                     <input
                         type="date"
                         matInput
-                        name="decaissementDate"
+                        name="outflowDate"
                         [matDatepicker]="date"
                         #datepicker="ngModel"
-                        [(ngModel)]="decaissement.decaissementDate"
+                        [(ngModel)]="outflow.outflowDate"
                         (dateInput)="getDate($event.value)"
                         required
                     />
-                    <!-- <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle> -->
                     <mat-datepicker #date color="primary"></mat-datepicker>
                     <mat-error *ngIf="!isValid(datepicker)">{{ getError(datepicker) }}</mat-error>
                 </mat-form-field>
@@ -134,7 +133,7 @@
                         matInput
                         name="amount"
                         #amount="ngModel"
-                        [(ngModel)]="decaissement.amount"
+                        [(ngModel)]="outflow.amount"
                         placeholder="XFCFA"
                         required
                     />
