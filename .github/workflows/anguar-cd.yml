@@ -55,7 +55,7 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: ZAP Scan
+      - name: Run DAST with Zap
         uses: zaproxy/action-full-scan@v0.7.0
         fail_action: false
         #rules_file_name: '.zap/rules.tsv'
