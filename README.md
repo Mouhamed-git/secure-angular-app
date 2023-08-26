@@ -330,7 +330,7 @@ jobs:
 
 ##### Thank you and Follow me! 🤗
 
-* medium: https://medium.com/@rootsn221/s%C3%A9curit%C3%A9-et-efficacit%C3%A9-comment-utiliser-docker-github-actions-et-les-tests-de-s%C3%A9curit%C3%A9-sca-6035b969397
+* medium: https://urlz.fr/nlgK
 * LinkedIn: https://www.linkedin.com/in/mouhamad-diack-b0b1541a3/
 * Discord: https://discord.com/users/845331863018274836
 * Portfolio: https://md-portfolio.carrd.co/
