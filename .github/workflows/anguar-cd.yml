@@ -61,5 +61,5 @@ jobs:
 
     - name: Run DAST with Zap
       run: |
-        docker run --name zap -t ghcr.io/zaproxy/zaproxy:stable zap-full-scan.py -t http://51.83.71.17 || true
+        docker run --name zap -t ghcr.io/zaproxy/zaproxy:stable zap-full-scan.py -t http://expample.com || true
 

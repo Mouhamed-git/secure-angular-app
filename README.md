@@ -1,17 +1,17 @@
 # Secure Angular App
 
-## This repository shows how to automate deployment and security testing like SCA, SAST and DAST with Angular App using GitHub Actions.
+## This repository how to use Docker, GitHub Actions and Security Tests (SCA, SAST and DAST) for Your Angular Project .
 
 ![My Image](/src/assets/images/ssdlc.png)
 
-** 🔵 Project Architecture 🔵 **
+** 🔵 Stack 🔵 **
 
 ![My Image](/src/assets/images/devsecops.jpg)
 
-Angular Project
+Angular Project Architecture
 
 ```bash
-  ├── Dockerfile
+├── Dockerfile
 ├── README.md
 ├── angular.json
 ├── karma.conf.js
@@ -103,6 +103,7 @@ Angular Project
 1. Dockerfile configuration
 
 ```dockerfile
+
 FROM node:16-alpine AS node
 
 WORKDIR /usr/src/app
@@ -122,7 +123,6 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY --from=node /usr/src/app/dist/secure-angular-app /usr/share/nginx/html
 
 EXPOSE 80
-
 ```
 
 2. Nginx configuration 
@@ -151,7 +151,7 @@ http {
 }
 ```
 
-3. dockerignore file
+3. .dockerignore file
 
 ```text
 # Compiled output
@@ -197,7 +197,7 @@ Thumbs.db
 .angular/*
 ```
 
-** 🔵 Workflow configuration 🔵 **
+** 🔵 Workflows configuration 🔵 **
 
 1. Workflow CI (angular-ci)
 
@@ -258,10 +258,9 @@ jobs:
       #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 ```
 
-6. Workflow CD (angular-d)
+2. Workflow CD (angular-cd)
 
-```yaml 
-
+```yaml
 name: Secure Angular App CD
 
 on:
@@ -282,37 +281,37 @@ jobs:
         working-directory: ./
 
     steps:
-    - name: Check out the repository
-      uses: actions/checkout@v3
+      - name: Check out the repository
+        uses: actions/checkout@v3
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v4
-      with:
-        context: .
-        file: ./Dockerfile
-        push: true
-        tags: miisteuhdiack/secure-angular-app:preprod
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: miisteuhdiack/secure-angular-app:preprod
 
-    - name: Deploy App
-      uses: appleboy/ssh-action@v0.1.10
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USER }}
-        key: ${{ secrets.SSH_KEY }}
-        script:  |
-          docker stop miisteuhdiack/secure-angular-app:preprod || true
-          docker rm -f secure-angular-app
-          docker pull miisteuhdiack/secure-angular-app:preprod
-          docker run --name secure-angular-app -p 80:80 -d miisteuhdiack/secure-angular-app:preprod
+      - name: Deploy App
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script:  |
+            docker stop miisteuhdiack/secure-angular-app:preprod || true
+            docker rm -f secure-angular-app
+            docker pull miisteuhdiack/secure-angular-app:preprod
+            docker run --name secure-angular-app -p 80:80 -d miisteuhdiack/secure-angular-app:preprod
 
   dast:
     needs: deploy
@@ -320,19 +319,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
 
-    - name: Run DAST with Zap
-      run: |
-        docker run --name zap -t ghcr.io/zaproxy/zaproxy:stable zap-full-scan.py -t http://51.83.71.17 || true
+      - name: Run DAST with Zap
+        run: |
+          docker run --name zap -t ghcr.io/zaproxy/zaproxy:stable zap-full-scan.py -t http://expample.com || true
+
 ```
 
+##### Thank you and Follow me! 🤗
 
-##### Thank you ! 🤗
-
-*Follow me:*
+* medium: https://medium.com/@rootsn221/s%C3%A9curit%C3%A9-et-efficacit%C3%A9-comment-utiliser-docker-github-actions-et-les-tests-de-s%C3%A9curit%C3%A9-sca-6035b969397
 * LinkedIn: https://www.linkedin.com/in/mouhamad-diack-b0b1541a3/
 * Discord: https://discord.com/users/845331863018274836
-* medium: https://medium.com/@rootsn221/spring-boot-postgresql-excel-84ea2b61ccfa
 * Portfolio: https://md-portfolio.carrd.co/
