@@ -57,7 +57,7 @@ jobs:
 
       - name: Run DAST with Zap
         uses: zaproxy/action-full-scan@v0.7.0
-        fail_action: false
-        #rules_file_name: '.zap/rules.tsv'
         with:
           target: 'http://51.83.71.17'
+          fail_action: false
+          #rules_file_name: '.zap/rules.tsv'
