@@ -2,6 +2,7 @@ name: Secure Angular App CD
 
 on:
   push:
+    branches:
     - 'master'
 
 jobs:
