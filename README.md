@@ -1,27 +1,336 @@
-# ContaApp
+# Secure Angular App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.2.4.
+## This repository how to use Docker, GitHub Actions and Security Tests (SCA, SAST and DAST) for Your Angular Project .
 
-## Development server
+![My Image](/src/assets/images/ssdlc.png)
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+** 🔵 Stack 🔵 **
 
-## Code scaffolding
+![My Image](/src/assets/images/devsecops.jpg)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Angular Project Architecture
 
-## Build
+```bash
+├── Dockerfile
+├── README.md
+├── angular.json
+├── karma.conf.js
+├── nginx.conf
+├── package-lock.json
+├── package.json
+├── sonar-project.properties
+├── .dockerignore
+├── .gitignore
+├── src
+│   ├── app
+│   │   ├── app-routing.module.ts
+│   │   ├── app.component.html
+│   │   ├── app.component.scss
+│   │   ├── app.component.ts
+│   │   ├── app.module.ts
+│   │   ├── layouts
+│   │   │   ├── footer
+│   │   │   │   ├── footer.component.html
+│   │   │   │   ├── footer.component.scss
+│   │   │   │   └── footer.component.ts
+│   │   │   └── header
+│   │   │       ├── header.component.html
+│   │   │       ├── header.component.scss
+│   │   │       └── header.component.ts
+│   │   ├── routes
+│   │   │   ├── home
+│   │   │   │   ├── home-routing.module.ts
+│   │   │   │   ├── home.component.html
+│   │   │   │   ├── home.component.scss
+│   │   │   │   ├── home.component.ts
+│   │   │   │   └── home.module.ts
+│   │   │   └── login
+│   │   │       ├── login-routing.module.ts
+│   │   │       ├── login.component.html
+│   │   │       ├── login.component.scss
+│   │   │       ├── login.component.ts
+│   │   │       └── login.module.ts
+│   │   ├── services
+│   │   │   ├── auth.service.ts
+│   │   │   ├── personnel.service.ts
+│   │   │   └── transaction.service.ts
+│   │   ├── shared
+│   │   │   ├── components
+│   │   │   │   ├── outflow
+│   │   │   │   │   ├── outflow.component.html
+│   │   │   │   │   ├── outflow.component.scss
+│   │   │   │   │   ├── outflow.component.ts
+│   │   │   │   │   └── outflow.module.ts
+│   │   │   │   └── payment
+│   │   │   │       ├── payment.component.html
+│   │   │   │       ├── payment.component.scss
+│   │   │   │       ├── payment.component.ts
+│   │   │   │       └── payment.module.ts
+│   │   │   ├── enums
+│   │   │   │   ├── decaissement-type.enums.ts
+│   │   │   │   ├── mounth.enums.ts
+│   │   │   │   └── transaction-type.enums.ts
+│   │   │   └── models
+│   │   │       ├── auth.model.ts
+│   │   │       ├── decaissement.model.ts
+│   │   │       ├── payment.model.ts
+│   │   │       ├── personnel.model.ts
+│   │   │       └── transaction.model.ts
+│   │   └── utils
+│   │       ├── date.utils.ts
+│   │       └── form-validator-utils.ts
+│   ├── assets
+│   │   ├── scss
+│   │   │   └── custom-styles.scss
+│   │   └── images
+│   │       └── cover.jpg
+│   ├── environments
+│   │   ├── environment.prod.ts
+│   │   └── environment.ts
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── main.ts
+│   ├── polyfills.ts
+│   ├── styles.scss
+│   └── test.ts
+├── tsconfig.app.json
+├── tsconfig.json
+└── tsconfig.spec.json
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+** 🔵 Dockerize Application 🔵 **
 
-## Running unit tests
+1. Dockerfile configuration
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```dockerfile
 
-## Running end-to-end tests
+FROM node:16-alpine AS node
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+WORKDIR /usr/src/app
 
-## Further help
+COPY package*.json ./
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+RUN npm ci
+
+COPY . .
+
+RUN npm run build
+
+FROM nginx:alpine
+
+COPY ./nginx.conf /etc/nginx/nginx.conf
+
+COPY --from=node /usr/src/app/dist/secure-angular-app /usr/share/nginx/html
+
+EXPOSE 80
+```
+
+2. Nginx configuration 
+
+```nginx configuration
+worker_processes auto;
+error_log  /var/log/nginx/error.log notice;
+pid /var/run/nginx.pid;
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    sendfile on ;
+    include /etc/nginx/mime.types;
+    server {
+        listen 80;     
+        listen [::]:80; 
+        root /usr/share/nginx/html;
+        index index.html;
+        location / {
+               try_files $uri $uri/ /index.html;
+        }
+    }
+}
+```
+
+3. .dockerignore file
+
+```text
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# System files
+.DS_Store
+Thumbs.db
+.angular/*
+```
+
+** 🔵 Workflows configuration 🔵 **
+
+1. Workflow CI (angular-ci)
+
+```yaml
+name: Secure Angular App CI
+
+on:
+  push:
+    branches:
+    - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Install NodeJs
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        cache: 'npm'
+        cache-dependency-path: './package-lock.json'
+
+    - name: Install dependencies
+      run: npm ci
+
+    - name: Run SCA with Npm Audit
+      run: |
+         npm audit --json > npm-audit.json || true
+         npx npm-audit-html -i npm-audit.json
+
+    - name: Archive audit report
+      uses: actions/upload-artifact@v3
+      with:
+        name: npm-audit-report
+        path: ./npm-audit.html
+
+    - name: Run SAST with Sonarqube
+      uses: sonarsource/sonarqube-scan-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+      with:
+        projectBaseDir: ./
+      # If you wish to fail your job when the Quality Gate is red, uncomment the
+      # following lines. This would typically be used to fail a deployment.
+      # - uses: sonarsource/sonarqube-quality-gate-action@master
+      #   timeout-minutes: 5
+      #   env:
+      #    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+```
+
+2. Workflow CD (angular-cd)
+
+```yaml
+name: Secure Angular App CD
+
+on:
+  pull_request:
+    branches:
+      - master
+    types:
+      - closed
+
+jobs:
+  deploy:
+
+    if: github.event.pull_request.merged == true
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: miisteuhdiack/secure-angular-app:preprod
+
+      - name: Deploy App
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script:  |
+            docker stop miisteuhdiack/secure-angular-app:preprod || true
+            docker rm -f secure-angular-app
+            docker pull miisteuhdiack/secure-angular-app:preprod
+            docker run --name secure-angular-app -p 80:80 -d miisteuhdiack/secure-angular-app:preprod
+
+  dast:
+    needs: deploy
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Run DAST with Zap
+        run: |
+          docker run --name zap -t ghcr.io/zaproxy/zaproxy:stable zap-full-scan.py -t http://expample.com || true
+
+```
+
+##### Thank you and Follow me! 🤗
+
+* medium: https://medium.com/@rootsn221/s%C3%A9curit%C3%A9-et-efficacit%C3%A9-comment-utiliser-docker-github-actions-et-les-tests-de-s%C3%A9curit%C3%A9-sca-6035b969397
+* LinkedIn: https://www.linkedin.com/in/mouhamad-diack-b0b1541a3/
+* Discord: https://discord.com/users/845331863018274836
+* Portfolio: https://md-portfolio.carrd.co/
